@@ -1,6 +1,6 @@
-# Pallo: CLI Library
+# Ride: CLI Library
 
-CLI library of the PHP Pallo framework.
+CLI library of the PHP Ride framework.
 
 ## Command
 
@@ -11,7 +11,7 @@ You can check this code sample of a command:
 
     <?php
     
-    use pallo\library\cli\command\AbstractCommand;
+    use ride\library\cli\command\AbstractCommand;
 
     class MyCommand extends AbstractCommand {
     
@@ -60,11 +60,11 @@ Check this code sample to implement this library:
 
     <?php
     
-    use pallo\library\cli\command\CommandContainer;
-    use pallo\library\cli\input\PhpInput;
-    use pallo\library\cli\output\PhpOutput;
-    use pallo\library\cli\Cli;
-    use pallo\library\cli\CommandInterpreter;
+    use ride\library\cli\command\CommandContainer;
+    use ride\library\cli\input\PhpInput;
+    use ride\library\cli\output\PhpOutput;
+    use ride\library\cli\Cli;
+    use ride\library\cli\CommandInterpreter;
     
     // Create a command container and add some commands to it
     $commandContainer = new CommandContainer();
