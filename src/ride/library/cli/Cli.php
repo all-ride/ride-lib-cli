@@ -25,13 +25,13 @@ class Cli {
 
     /**
      * Input implementation for the commands
-     * @var ride\library\cli\input\Input
+     * @var \ride\library\cli\input\Input
      */
 	protected $input;
 
     /**
      * Output implementation
-     * @var ride\library\cli\output\Output
+     * @var \ride\library\cli\output\Output
      */
 	protected $output;
 
@@ -77,7 +77,7 @@ class Cli {
 
     /**
      * Sets the input implementation for the commands
-     * @param ride\library\cli\input\Input $input
+     * @param \ride\library\cli\input\Input $input
      * @return null
      */
     public function setInput(Input $input) {
@@ -86,7 +86,7 @@ class Cli {
 
     /**
      * Gets the input implementation for the commands
-     * @return ride\library\cli\input\Input
+     * @return \ride\library\cli\input\Input
      */
     public function getInput() {
         return $this->input;
@@ -94,7 +94,7 @@ class Cli {
 
     /**
      * Sets the output implementation
-     * @param ride\library\cli\output\Output $output
+     * @param \ride\library\cli\output\Output $output
      * @return null
      */
     public function setOutput(Output $output) {
@@ -103,7 +103,7 @@ class Cli {
 
     /**
      * Gets the output implementation
-     * @return ride\library\cli\output\Output
+     * @return \ride\library\cli\output\Output
      */
     public function getOutput() {
     	return $this->output;
@@ -111,7 +111,7 @@ class Cli {
 
     /**
      * Sets the command interpreter
-     * @param ride\library\cli\CommandInterpreter $commandInterpreter
+     * @param \ride\library\cli\CommandInterpreter $commandInterpreter
      * @return null
      */
     public function setCommandInterpreter(CommandInterpreter $commandInterpreter) {
@@ -120,7 +120,7 @@ class Cli {
 
     /**
      * Gets the command interpreter
-     * @return ride\library\cli\CommandInterpreter
+     * @return \ride\library\cli\CommandInterpreter
      */
     public function getCommandInterpreter() {
         return $this->interpreter;
@@ -157,7 +157,7 @@ class Cli {
      * @return boolean
      */
     public function isPhpCommandEnabled() {
-        $this->enablePhpCommand = $enablePhpCommand;
+        return $this->enablePhpCommand;
     }
 
     /**
@@ -170,9 +170,9 @@ class Cli {
 
     /**
      * Runs the console
-     * @param ride\library\cli\input\Input $input Input for the CLI
+     * @param \ride\library\cli\input\Input $input Input for the CLI
      * @return null
-     * @throws ride\library\cli\exception\CliException when no input or output
+     * @throws \ride\library\cli\exception\CliException when no input or output
      * is set to this CLI
      */
     public function run(Input $input) {
@@ -250,7 +250,7 @@ class Cli {
 
     /**
      * Hook to initialize the CLI
-     * @param ride\library\cli\input\Input $input Input of the CLI
+     * @param \ride\library\cli\input\Input $input Input of the CLI
      * @return null
      */
     protected function initialize(Input $input) {

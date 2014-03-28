@@ -37,13 +37,13 @@ abstract class AbstractCommand implements Command {
 
 	/**
 	 * Command input
-	 * @var ride\library\cli\input\CommandInput
+	 * @var \ride\library\cli\input\CommandInput
 	 */
     protected $input;
 
 	/**
 	 * Output implementation
-	 * @var ride\library\cli\output\Output
+	 * @var \ride\library\cli\output\Output
 	 */
 	protected $output;
 
@@ -144,7 +144,7 @@ abstract class AbstractCommand implements Command {
 	 * @param boolean $isRequired Flag to see if the argument is required
 	 * @param boolean $isDynamic Flag to see if the argument is dynamic
 	 * @return null
-	 * @throws ride\library\cli\exception\CliException when the previous
+	 * @throws \ride\library\cli\exception\CliException when the previous
 	 * argument is optional and this one is not
 	 */
 	protected function addArgument($name, $description, $isRequired = true, $isDynamic = false) {
@@ -195,7 +195,7 @@ abstract class AbstractCommand implements Command {
 
 	/**
 	 * Sets the command input
-	 * @param ride\library\cli\CommandInput $input
+	 * @param \ride\library\cli\CommandInput $input
 	 * @return null
 	 */
 	public function setCommandInput(CommandInput $input) {
@@ -204,7 +204,7 @@ abstract class AbstractCommand implements Command {
 
 	/**
 	 * Sets the output implementation
-	 * @param ride\library\cli\output\Output $output
+	 * @param \ride\library\cli\output\Output $output
 	 * @return null
 	*/
 	public function setOutput(Output $output) {

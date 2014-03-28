@@ -128,7 +128,7 @@ class CommandInput {
      * @param mixed $index The current index of the argument
      * @param string $name The name of the argument
      * @return null
-     * @throws ride\library\cli\exception\CliException when no argument is
+     * @throws \ride\library\cli\exception\CliException when no argument is
      * set with the provided index
      */
     public function nameArgument($index, $name) {
@@ -147,7 +147,7 @@ class CommandInput {
      * @param mixed $index The current index of the argument
      * @param string $name The name of the argument
      * @return null
-     * @throws ride\library\cli\exception\CliException when no argument is
+     * @throws \ride\library\cli\exception\CliException when no argument is
      * set with the provided index
      */
     public function nameDynamicArgument($index, $name) {
@@ -204,7 +204,7 @@ class CommandInput {
 
     /**
      * Sets the input implementation
-     * @param ride\library\input\Input $input
+     * @param \ride\library\cli\input\Input $input
      * @return null
      */
     public function setInput(Input $input) {
@@ -225,10 +225,10 @@ class CommandInput {
 
     /**
      * Reads a line from the input
-     * @param ride\library\cli\output\Output $output
+     * @param \ride\library\cli\output\Output $output
      * @param string $prompt Prompt for the input
      * @return string Input value
-     * @throws ride\library\cli\exception\CliException when no input set to
+     * @throws \ride\library\cli\exception\CliException when no input set to
      * wrap around
      */
     public function read(Output $output, $prompt) {

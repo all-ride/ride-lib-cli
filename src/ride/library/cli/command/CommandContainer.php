@@ -21,7 +21,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
 
     /**
      * Adds a command in this container
-     * @param ride\library\cli\command\Command $command Command to add
+     * @param \ride\library\cli\command\Command $command Command to add
      * @return null
      */
     public function addCommand(Command $command) {
@@ -49,7 +49,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Checks if a command is registered
      * @param string $name
      * @return boolean True when the command is registered, false otherwise
-     * @throws ride\library\cli\exception\CliException when the provided name
+     * @throws \ride\library\cli\exception\CliException when the provided name
      * is empty or invalid
      */
     public function hasCommand($name) {
@@ -64,7 +64,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Gets a command by its name
      * @param string $name
      * @return Command
-     * @throws ride\library\cli\exception\CliException when the command if not
+     * @throws \ride\library\cli\exception\CliException when the command if not
      * in this container
      */
     public function getCommand($name) {

@@ -70,7 +70,7 @@ class CommandArgument {
 	 * Sets the name of this argument
 	 * @param string $name
 	 * @return null
-	 * @throws ride\library\cli\exception\CliException when the name is
+	 * @throws \ride\library\cli\exception\CliException when the name is
 	 * invalid
 	 */
 	protected function setName($name) {
@@ -93,7 +93,7 @@ class CommandArgument {
 	 * Sets the description of this argument
 	 * @param string $description
 	 * @return null
-	 * @throws ride\library\cli\exception\CliException when the description is
+	 * @throws /ride\library\cli\exception\CliException when the description is
 	 * invalid
 	 */
 	protected function setDescription($description) {
@@ -116,7 +116,7 @@ class CommandArgument {
 	 * Sets whether this argument is required
 	 * @param boolean $flag
 	 * @return null
-	 * @throws ride\library\cli\exception\CliException when the flag is not a
+	 * @throws \ride\library\cli\exception\CliException when the flag is not a
 	 * boolean
 	 */
 	protected function setIsRequired($flag) {
@@ -140,7 +140,7 @@ class CommandArgument {
 	 * remaining input, therefor there can be only one.
 	 * @param boolean $flag
 	 * @return null
-	 * @throws ride\library\cli\exception\CliException when the flag is not a
+	 * @throws \ride\library\cli\exception\CliException when the flag is not a
 	 * boolean
 	 */
 	protected function setIsDynamic($flag) {

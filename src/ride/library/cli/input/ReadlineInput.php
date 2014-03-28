@@ -30,7 +30,7 @@ class ReadlineInput implements AutoCompletableInput {
 
     /**
      * Adds a auto completion implementation to this input
-     * @param ride\library\cli\input\AutoCompletable $autoCompletable
+     * @param \ride\library\cli\input\AutoCompletable $autoCompletable
      * @return null
      */
     public function addAutoCompletion(AutoCompletable $autoCompletable) {
@@ -94,7 +94,7 @@ class ReadlineInput implements AutoCompletableInput {
 
     /**
      * Reads a line from the input
-     * @param ride\library\cli\output\Output $output
+     * @param \ride\library\cli\output\Output $output
      * @param string $prompt Prompt for the input
      * @return string Input value
      */
