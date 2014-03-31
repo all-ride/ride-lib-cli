@@ -38,20 +38,20 @@ interface Command {
 	/**
 	 * Gets the definitions of the arguments
 	 * @return array Array of Argument instances
-	 * @see ride\library\cli\command\CommandArgument
+	 * @see \ride\library\cli\command\CommandArgument
 	 */
 	public function getArguments();
 
 	/**
 	 * Sets the command input
-	 * @param ride\library\cli\input\CommandInput $input
+	 * @param \ride\library\cli\input\CommandInput $input
 	 * @return null
 	 */
 	public function setCommandInput(CommandInput $input);
 
 	/**
 	 * Sets the output implementation
-	 * @param ride\library\cli\output\Output $output
+	 * @param \ride\library\cli\output\Output $output
 	 */
 	public function setOutput(Output $output);
 

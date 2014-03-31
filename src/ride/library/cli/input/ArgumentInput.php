@@ -20,7 +20,7 @@ class ArgumentInput implements Input {
 
     /**
      * Reads a line from the input
-     * @param ride\library\cli\output\Output $output
+     * @param \ride\library\cli\output\Output $output
      * @param string $prompt Prompt for the input
      * @return string Input value
      */

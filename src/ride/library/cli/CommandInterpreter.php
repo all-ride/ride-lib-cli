@@ -18,20 +18,20 @@ class CommandInterpreter {
 
     /**
      * Instance of the command container
-     * @var ride\library\cli\command\CommandContainer
+     * @var \ride\library\cli\command\CommandContainer
      */
     protected $commandContainer;
 
     /**
      * Instance of the argument parser
-     * @var ride\library\cli\input\ArgumentParser
+     * @var \ride\library\cli\input\ArgumentParser
      */
     protected $argumentParser;
 
     /**
      * Constructs a new command interpreter
-     * @param ride\library\cli\command\CommandContainer $commandContainer
-     * @param ride\library\cli\input\ArgumentParser $argumentParser
+     * @param \ride\library\cli\command\CommandContainer $commandContainer
+     * @param \ride\library\cli\input\ArgumentParser $argumentParser
      * @return null
      */
     public function __construct(CommandContainer $commandContainer, ArgumentParser $argumentParser = null) {
@@ -45,7 +45,7 @@ class CommandInterpreter {
 
     /**
      * Gets the command container
-     * @return ride\library\cli\command\CommandContainer
+     * @return \ride\library\cli\command\CommandContainer
      */
     public function getCommandContainer() {
         return $this->commandContainer;
@@ -54,10 +54,10 @@ class CommandInterpreter {
     /**
      * Interprets the provided command
      * @param string $command Command input to interpret
-     * @param ride\library\cli\input\Input $input Input implementation
-     * @param ride\library\cli\output\Output $output Output implementation
+     * @param \ride\library\cli\input\Input $input Input implementation
+     * @param \ride\library\cli\output\Output $output Output implementation
      * @return null
-     * @throws ride\library\cli\exception\CliException when the command does
+     * @throws \ride\library\cli\exception\CliException when the command does
      * not exist
      */
     public function interpret($command, Input $input, Output $output) {
