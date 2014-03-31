@@ -181,7 +181,7 @@ class ArgumentParser {
                     $key = substr($argument, 2, $eqPos - 2);
                     $parsedArguments[$key] = substr($argument, $eqPos + 1);
                 }
-            } elseif (substr($argument, 0, 1) == '-') {
+            } elseif (substr($argument, 0, 1) == '-' && !is_numeric(substr($argument, 1, 1))) {
                 // flags: -n or -arf
                 if (substr($argument, 2, 1) == '='){
                     $key = substr($argument, 1, 1);
