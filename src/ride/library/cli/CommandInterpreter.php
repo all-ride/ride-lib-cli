@@ -7,6 +7,7 @@ use ride\library\cli\exception\ArgumentNotSetException;
 use ride\library\cli\exception\CommandNotFoundException;
 use ride\library\cli\exception\FlagNotFoundException;
 use ride\library\cli\exception\InvalidArgumentCountException;
+use ride\library\cli\exception\InvalidFlagException;
 use ride\library\cli\input\ArgumentParser;
 use ride\library\cli\input\Input;
 use ride\library\cli\output\Output;
