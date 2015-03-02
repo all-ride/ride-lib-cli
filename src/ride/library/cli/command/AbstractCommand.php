@@ -17,6 +17,12 @@ abstract class AbstractCommand implements Command {
      */
 	protected $name;
 
+    /**
+     * Aliases of this command
+     * @var array
+     */
+	protected $aliases;
+
 	/**
 	 * Short description of this command
 	 * @var string
@@ -58,6 +64,7 @@ abstract class AbstractCommand implements Command {
 		$this->setName($name);
 		$this->setDescription($description);
 
+		$this->aliases = array();
 		$this->arguments = array();
 		$this->flags = array();
 	}
@@ -70,7 +77,7 @@ abstract class AbstractCommand implements Command {
 	 */
 	protected function setName($name) {
 		if (!is_string($name) || !$name) {
-			throw new CliException('Provided name is empty or invalid');
+			throw new CliException('Could not set name of command: provided name is empty or invalid');
 		}
 
 		$this->name = $name;
@@ -84,6 +91,27 @@ abstract class AbstractCommand implements Command {
 		return $this->name;
 	}
 
+    /**
+     * Adds an alias for this command
+     * @param string $alias Alias for this command
+     * @return null
+     */
+    protected function addAlias($alias) {
+		if (!is_string($alias) || !$alias) {
+			throw new CliException('Could not add alias to command: provided alias is empty or invalid');
+		}
+
+        $this->aliases[$alias] = true;
+    }
+
+    /**
+     * Gets the aliases of the command
+     * @return array
+     */
+	public function getAliases() {
+        return array_keys($this->aliases);
+    }
+
 	/**
 	 * Sets the short description of this command
 	 * @param string $description
@@ -92,7 +120,7 @@ abstract class AbstractCommand implements Command {
 	 */
 	protected function setDescription($description) {
 		if ($description !== null && (!is_string($description) || !$description)) {
-			throw new CliException('Provided description is empty or invalid');
+			throw new CliException('Could not set description of command: provided description is empty or invalid');
 		}
 
 		$this->description = $description;
@@ -154,11 +182,11 @@ abstract class AbstractCommand implements Command {
 			list($lastArgument) = array_slice($this->arguments, -1);
 
 			if ($lastArgument->isDynamic()) {
-				throw new CliException("Cannot add a argument after a dynamic argument");
+				throw new CliException("Cannot add argument to command: no more arguments allowed after a dynamic argument");
 			}
 
 			if (!$lastArgument->isRequired() && $argument->isRequired()) {
-				throw new CliException("Cannot add a required argument after a optional argument");
+				throw new CliException("Cannot add argument to command: a required argument cannot be preceeded with an optional argument");
 			}
 		}
 
