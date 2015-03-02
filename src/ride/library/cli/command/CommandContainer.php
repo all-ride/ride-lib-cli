@@ -20,14 +20,35 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
     protected $commands = array();
 
     /**
+     * Aliases of the commands
+     * @var array
+     */
+    protected $aliases = array();
+
+    /**
      * Adds a command in this container
      * @param \ride\library\cli\command\Command $command Command to add
      * @return null
+     * @throws \ride\library\cli\exception\CliException when a alias of the
+     * command is already used
      */
     public function addCommand(Command $command) {
-        $this->commands[$command->getName()] = $command;
+        $commandName = $command->getName();
+
+        $this->removeCommand($commandName);
+
+        $this->commands[$commandName] = $command;
 
         ksort($this->commands);
+
+        $aliases = $command->getAliases();
+        foreach ($aliases as $alias) {
+            if (isset($this->aliases[$alias])) {
+                throw new CliException('Could not add command: alias ' . $alias . ' is already used by ' . $this->aliases[$alias]);
+            }
+
+            $this->aliases[$alias] = $commandName;
+        }
     }
 
     /**
@@ -41,6 +62,12 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
         }
 
         unset($this->commands[$name]);
+
+        foreach ($this->aliases as $alias => $commandName) {
+            if ($commandName == $name) {
+                unset($this->aliases[$alias]);
+            }
+        }
 
         return true;
     }
@@ -85,14 +112,33 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
     }
 
     /**
+     * Replaces the aliases with their full command
+     * @param string $input Input value to replace
+     * @return string Input value with aliases replaced
+     */
+    public function replaceAliases($input) {
+        foreach ($this->aliases as $alias => $commandName) {
+            $aliasLength = strlen($alias);
+            if ($input === $alias || strncmp($input, $alias . ' ', $aliasLength + 1) === 0) {
+                $input = $commandName . substr($input, $aliasLength);
+
+                break;
+            }
+        }
+
+        return $input;
+    }
+
+    /**
      * Performs auto complete on the provided input
      * @param string $input The input value to auto complete
      * @return array|null Array with the auto completion matches or null when
      * no auto completion is available
      */
     public function autoComplete($input) {
-        $commands = array();
+        $input = $this->replaceAliases($input);
 
+        $commands = array();
         foreach ($this->commands as $commandName => $commandInstance) {
             $commandNameLength = strlen($commandName);
             $inputLength = strlen($input);

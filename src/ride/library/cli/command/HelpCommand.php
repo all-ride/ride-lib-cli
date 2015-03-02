@@ -50,6 +50,7 @@ class HelpCommand extends AbstractCommand {
      * @return null
      */
     protected function showCommand($command) {
+        $command = $this->commandContainer->replaceAliases($command);
     	$command = $this->commandContainer->getCommand($command);
 
     	$description = $command->getDescription();
@@ -62,12 +63,20 @@ class HelpCommand extends AbstractCommand {
     	}
 
     	$this->output->writeLine('Syntax: ' . $command->getSyntax());
+
+        $aliases = $command->getAliases();
+        if ($aliases) {
+            $this->output->writeLine('Aliases: ' . implode(',', $aliases));
+        }
+
     	foreach ($flags as $flag => $description) {
     	    $this->output->writeLine('- [--' . $flag . '] ' . $description);
     	}
+
 		foreach ($arguments as $argument) {
 			$this->output->writeLine('- ' . $argument);
 		}
+
         $this->output->writeLine('');
     }
 
@@ -79,7 +88,14 @@ class HelpCommand extends AbstractCommand {
         $this->output->writeLine('Available commands:');
 
         foreach ($this->commandContainer as $command) {
-            $this->output->writeLine('- ' . $command->getSyntax());
+            $syntax = $command->getSyntax();
+
+            $aliases = $command->getAliases();
+            if ($aliases) {
+                $syntax .= ' (' . implode(',', $aliases) . ')';
+            }
+
+            $this->output->writeLine('- ' . $syntax);
         }
 
         $this->output->writeLine('');

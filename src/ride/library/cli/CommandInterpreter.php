@@ -62,6 +62,9 @@ class CommandInterpreter {
      * not exist
      */
     public function interpret($command, Input $input, Output $output) {
+        // replace alias with full command
+        $command = $this->commandContainer->replaceAliases($command);
+
         // find the command
         $runCommand = null;
         foreach ($this->commandContainer as $commandName => $commandInstance) {

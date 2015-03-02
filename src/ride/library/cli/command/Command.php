@@ -16,6 +16,12 @@ interface Command {
      */
 	public function getName();
 
+    /**
+     * Gets the aliases of the command
+     * @return array
+     */
+	public function getAliases();
+
 	/**
 	 * Gets a short description of the command
 	 * @return string
