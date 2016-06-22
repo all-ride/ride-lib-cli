@@ -76,7 +76,7 @@ class Cli {
     }
 
     /**
-     * Sets the input implementation for the commands
+     * Sets the input implementation which is available for the commands
      * @param \ride\library\cli\input\Input $input
      * @return null
      */
@@ -85,7 +85,7 @@ class Cli {
     }
 
     /**
-     * Gets the input implementation for the commands
+     * Gets the input implementation which is available for the commands
      * @return \ride\library\cli\input\Input
      */
     public function getInput() {
@@ -189,7 +189,15 @@ class Cli {
         // run the interpreter loop
         do {
             // get the input
-            $command = trim($input->read($this->output, $this->prompt));
+            $command = $input->read($this->output, $this->prompt);
+            if ($command === false && $input->isInteractive()) {
+                // CTRL+D
+                $this->output->writeLine('');
+
+                $command = ExitCommand::NAME;
+            }
+
+            $command = trim($command);
 
             if ($command == ExitCommand::NAME || $command == '') {
                 // empty or exit command, next loop
@@ -273,7 +281,6 @@ class Cli {
         if ($input instanceof AutoCompletableInput) {
             $input->addAutoCompletion($this->interpreter->getCommandContainer());
         }
-
     }
 
 }
