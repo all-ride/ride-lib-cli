@@ -6,8 +6,8 @@ use ride\library\cli\exception\CliException;
 use ride\library\cli\output\Output;
 
 /**
-* Readline implementation for the input interface
-*/
+ * Readline implementation for a interactive shell input in a CLI environment
+ */
 class ReadlineInput implements AutoCompletableInput {
 
     /**
