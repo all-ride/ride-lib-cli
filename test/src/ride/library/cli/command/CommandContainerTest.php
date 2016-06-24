@@ -55,6 +55,30 @@ class CommandContainerTest extends PHPUnit_Framework_TestCase {
         );
     }
 
+    /**
+     * @dataProvider providerAutoComplete
+     */
+    public function testAutoComplete($expected, $input) {
+        $exitCommand = new ExitCommand();
+        $helpCommand = new HelpCommand($this->commandContainer);
+        $testCommand = new TestCommand();
+
+        $this->commandContainer->addCommand($exitCommand);
+        $this->commandContainer->addCommand($helpCommand);
+        $this->commandContainer->addCommand($testCommand);
+
+        $this->assertEquals($expected, $this->commandContainer->autoComplete($input));
+    }
+
+    public function providerAutoComplete() {
+        return array(
+            array(array('exit' => 'exit', 'help' => 'help', 'name' => 'name'), ''),
+            array(array('name' => 'name'), 'n'),
+            array(array('help' => 'help'), 'he'),
+            array(array('help exit' => 'help exit'), 'help e'),
+        );
+    }
+
     public function testIterator() {
         $expected = array(
             'exit' => new ExitCommand(),

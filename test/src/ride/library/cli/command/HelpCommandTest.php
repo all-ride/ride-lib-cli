@@ -62,4 +62,27 @@ Syntax: help [<command>]
         $this->assertEquals($expected, implode("\n", $output->getOutput()));
     }
 
+    /**
+     * @dataProvider providerAutoComplete
+     */
+    public function testAutoComplete($expected, $input) {
+        $commandContainer = new CommandContainer();
+
+        $exitCommand = new ExitCommand();
+        $helpCommand = new HelpCommand($commandContainer);
+
+        $commandContainer->addCommand($exitCommand);
+        $commandContainer->addCommand($helpCommand);
+
+        $this->assertEquals($expected, $helpCommand->autoComplete($input));
+    }
+
+    public function providerAutoComplete() {
+        return array(
+            array(array('exit', 'help'), ''),
+            array(array('help'), 'he'),
+            array(array(), 'test'),
+        );
+    }
+
 }

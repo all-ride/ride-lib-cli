@@ -67,7 +67,7 @@ class ReadlineInput implements AutoCompletableInput {
 
         // process the matches, remove the input from the matches
         foreach ($matches as $matchIndex => $match) {
-			$matches[$matchIndex] = substr($match, $position);
+            $matches[$matchIndex] = substr($match, $position);
 
             if ($matches[$matchIndex] == '' || $input == $match) {
                 unset($matches[$matchIndex]);
