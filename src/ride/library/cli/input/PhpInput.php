@@ -5,7 +5,7 @@ namespace ride\library\cli\input;
 use ride\library\cli\output\Output;
 
 /**
- * PHP implementation for input in a CLI environment
+ * Plain PHP implementation for a interactive shell input in a CLI environment
  */
 class PhpInput implements Input {
 

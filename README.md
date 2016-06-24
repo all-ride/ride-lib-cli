@@ -58,7 +58,7 @@ class MyCommand extends AbstractCommand {
 
 ## Code Sample
 
-Check this code sample to implement this library:
+Check this code sample to create a CLI from this library:
 
 ```php
 <?php
@@ -71,7 +71,7 @@ use ride\library\cli\CommandInterpreter;
 
 // Create a command container and add some commands to it
 $commandContainer = new CommandContainer();
-$commandContainer->addCommand(new MyCommand()); // check the command code above
+$commandContainer->addCommand(new MyCommand()); // the command from previous sample
 
 // Create a command interpreter from the container
 $commandInterpreter = new CommandInterpreter($commandContainer);

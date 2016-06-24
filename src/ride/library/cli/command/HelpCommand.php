@@ -2,10 +2,12 @@
 
 namespace ride\library\cli\command;
 
+use ride\library\cli\input\AutoCompletable;
+
 /**
  * Command to view and modify the configuration
  */
-class HelpCommand extends AbstractCommand {
+class HelpCommand extends AbstractCommand implements AutoCompletable {
 
     /**
      * Name of this command
@@ -28,7 +30,7 @@ class HelpCommand extends AbstractCommand {
 
         parent::__construct(self::NAME, 'Prints this help.');
 
-		$this->addArgument('command', 'Provide a name of a command to get the detailed help of the command', false, true);
+        $this->addArgument('command', 'Provide a name of a command to get the detailed help of the command', false, true);
     }
 
     /**
@@ -36,12 +38,12 @@ class HelpCommand extends AbstractCommand {
      * @return null
      */
     public function execute() {
-    	$command = $this->input->getArgument('command');
-    	if ($command) {
-    		$this->showCommand($command);
-    	} else {
-    		$this->showOverview();
-    	}
+        $command = $this->input->getArgument('command');
+        if ($command) {
+            $this->showCommand($command);
+        } else {
+            $this->showOverview();
+        }
     }
 
     /**
@@ -51,31 +53,31 @@ class HelpCommand extends AbstractCommand {
      */
     protected function showCommand($command) {
         $command = $this->commandContainer->replaceAliases($command);
-    	$command = $this->commandContainer->getCommand($command);
+        $command = $this->commandContainer->getCommand($command);
 
-    	$description = $command->getDescription();
-    	$arguments = $command->getArguments();
-    	$flags= $command->getFlags();
+        $description = $command->getDescription();
+        $arguments = $command->getArguments();
+        $flags= $command->getFlags();
 
-    	if ($description) {
-    		$this->output->writeLine($description);
-			$this->output->writeLine('');
-    	}
+        if ($description) {
+            $this->output->writeLine($description);
+            $this->output->writeLine('');
+        }
 
-    	$this->output->writeLine('Syntax: ' . $command->getSyntax());
+        $this->output->writeLine('Syntax: ' . $command->getSyntax());
 
         $aliases = $command->getAliases();
         if ($aliases) {
             $this->output->writeLine('Aliases: ' . implode(',', $aliases));
         }
 
-    	foreach ($flags as $flag => $description) {
-    	    $this->output->writeLine('- [--' . $flag . '] ' . $description);
-    	}
+        foreach ($flags as $flag => $description) {
+            $this->output->writeLine('- [--' . $flag . '] ' . $description);
+        }
 
-		foreach ($arguments as $argument) {
-			$this->output->writeLine('- ' . $argument);
-		}
+        foreach ($arguments as $argument) {
+            $this->output->writeLine('- ' . $argument);
+        }
 
         $this->output->writeLine('');
     }
@@ -101,6 +103,29 @@ class HelpCommand extends AbstractCommand {
         $this->output->writeLine('');
         $this->output->writeLine('Use \'help <command>\' to get help for a specific command.');
         $this->output->writeLine('');
+    }
+
+    /**
+     * Performs auto complete on the provided input
+     * @param string $input Input value to auto complete
+     * @return array Array with the auto completion matches
+     */
+    public function autoComplete($input) {
+        $completion = array();
+
+        foreach ($this->commandContainer as $command) {
+            if (!$input || strpos($command->getName(), $input) === 0) {
+                $completion[] = $command->getName();
+            }
+
+            foreach ($command->getAliases() as $alias) {
+                if (!$input || strpos($alias, $input) === 0) {
+                    $completion[] = $alias;
+                }
+            }
+        }
+
+        return $completion;
     }
 
 }

@@ -139,23 +139,19 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
         $input = $this->replaceAliases($input);
 
         $commands = array();
-        foreach ($this->commands as $commandName => $commandInstance) {
+        foreach ($this->commands as $commandName => $command) {
             $commandNameLength = strlen($commandName);
             $inputLength = strlen($input);
-            if (strncmp($commandName, $input, $inputLength) != 0 && strncmp($input, $commandName, $commandNameLength) != 0) {
-                continue;
+            if (strncmp($commandName, $input, $inputLength) === 0 || strncmp($input, $commandName, $commandNameLength) === 0) {
+                $commands[$commandName] = $command;
             }
-
-            $commands[$commandName] = $commandInstance;
         }
 
         $tokens = explode(' ', $input);
         $numTokens = count($tokens);
 
         $completion = array();
-        foreach ($commands as $index => $command) {
-            $commandName = $command->getName();
-
+        foreach ($commands as $commandName => $command) {
             $commandTokens = explode(' ', $commandName);
             $numCommandTokens = count($commandTokens);
 
@@ -168,16 +164,12 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
                 $completion[$commandName] = $commandName;
             } elseif ($numTokens == $numCommandTokens) {
                 $completion[$commandName] = $commandName;
-            } else {
-                unset($commands[$index]);
+            } elseif ($command instanceof AutoCompletable) {
+                $commandInput = substr($input, strlen($commandName) + 1);
+                $commandCompletion = $command->autoComplete($commandInput);
 
-                if ($command instanceof AutoCompletable) {
-                    $commandInput = substr($input, strlen($commandName) + 1);
-                    $commandCompletion = $command->autoComplete($commandInput);
-
-                    foreach ($commandCompletion as $commandAutoComplete) {
-                        $completion[$commandName . ' ' . $commandAutoComplete] = $commandName . ' ' . $commandAutoComplete;
-                    }
+                foreach ($commandCompletion as $commandAutoComplete) {
+                    $completion[$commandName . ' ' . $commandAutoComplete] = $commandName . ' ' . $commandAutoComplete;
                 }
             }
         }

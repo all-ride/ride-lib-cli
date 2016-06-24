@@ -66,17 +66,60 @@ class Cli {
      * @return null
      */
     public function __construct(CommandInterpreter $interpreter, $prompt = '> ') {
+    	$this->setCommandInterpreter($interpreter);
+        $this->setPrompt($prompt);
+
     	$this->input = null;
     	$this->output = null;
-    	$this->interpreter = $interpreter;
-    	$this->prompt = $prompt;
+
     	$this->isDebug = false;
     	$this->enablePhpCommand = false;
+
     	$this->exitCode = 0;
     }
 
     /**
-     * Sets the input implementation for the commands
+     * Sets the command interpreter
+     * @param \ride\library\cli\CommandInterpreter $commandInterpreter
+     * @return null
+     */
+    public function setCommandInterpreter(CommandInterpreter $commandInterpreter) {
+        $this->interpreter = $commandInterpreter;
+    }
+
+    /**
+     * Gets the command interpreter
+     * @return \ride\library\cli\CommandInterpreter
+     */
+    public function getCommandInterpreter() {
+        return $this->interpreter;
+    }
+
+    /**
+     * Sets the prompt
+     * @param string $prompt
+     * @return null
+     * @throws \ride\library\cli\exception\CliException when the provided prompt
+     * is invalid
+     */
+    public function setPrompt($prompt) {
+        if (!is_string($prompt)) {
+            throw new CliException('Could not set the prompt of the CLI: invalid prompt provided');
+        }
+
+        $this->prompt = $prompt;
+    }
+
+    /**
+     * Gets the current prompt
+     * @return string
+     */
+    public function getPrompt() {
+        return $this->prompt;
+    }
+
+    /**
+     * Sets the input implementation which is available for the commands
      * @param \ride\library\cli\input\Input $input
      * @return null
      */
@@ -85,7 +128,7 @@ class Cli {
     }
 
     /**
-     * Gets the input implementation for the commands
+     * Gets the input implementation which is available for the commands
      * @return \ride\library\cli\input\Input
      */
     public function getInput() {
@@ -107,23 +150,6 @@ class Cli {
      */
     public function getOutput() {
     	return $this->output;
-    }
-
-    /**
-     * Sets the command interpreter
-     * @param \ride\library\cli\CommandInterpreter $commandInterpreter
-     * @return null
-     */
-    public function setCommandInterpreter(CommandInterpreter $commandInterpreter) {
-        $this->interpreter = $commandInterpreter;
-    }
-
-    /**
-     * Gets the command interpreter
-     * @return \ride\library\cli\CommandInterpreter
-     */
-    public function getCommandInterpreter() {
-        return $this->interpreter;
     }
 
     /**
@@ -189,16 +215,24 @@ class Cli {
         // run the interpreter loop
         do {
             // get the input
-            $command = trim($input->read($this->output, $this->prompt));
+            $command = $input->read($this->output, $this->prompt);
+            if ($command === false && $input->isInteractive()) {
+                // CTRL+D
+                $this->output->writeLine('');
 
-            if ($command == ExitCommand::NAME || $command == '') {
+                $command = ExitCommand::NAME;
+            } elseif ($command !== null) {
+                $command = trim($command);
+            }
+
+            if ($command == ExitCommand::NAME || $command === null || $command == '') {
                 // empty or exit command, next loop
                 continue;
             }
 
             $this->exitCode = 0;
 
-            if ($this->enablePhpCommand && strlen($command) > 4 && substr($command, 0, 4) == 'php ') {
+            if ($this->enablePhpCommand && strlen($command) > 4 && substr($command, 0, 4) == PhpCommand::NAME . ' ') {
                 // implement the php command straight in the console in order to
                 // create/use a context
                 $command = substr($command, 4);
@@ -245,7 +279,7 @@ class Cli {
                     }
                 }
             }
-        } while ($input->isInteractive() && $command != ExitCommand::NAME);
+        } while ($command !== ExitCommand::NAME && $command !== null);
     }
 
     /**
@@ -273,7 +307,6 @@ class Cli {
         if ($input instanceof AutoCompletableInput) {
             $input->addAutoCompletion($this->interpreter->getCommandContainer());
         }
-
     }
 
 }
