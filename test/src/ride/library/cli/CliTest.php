@@ -91,7 +91,7 @@ class CliTest extends PHPUnit_Framework_TestCase {
         $commands = array(
             'php $var = 1',
             'php $var /= 0',
-            'php $var += 3',
+            'php $var = 3',
             'php $this->output->write($var)',
         );
         $expectedOutput = array(
