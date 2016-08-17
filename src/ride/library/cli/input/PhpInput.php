@@ -26,7 +26,14 @@ class PhpInput implements Input {
     public function read(Output $output, $prompt) {
         $output->write($prompt);
 
-        return trim(fgets(STDIN));
+        $input = fgets(STDIN);
+        if ($input === false) {
+            return $input;
+        }
+
+        $input = trim($input);
+
+        return $input;
     }
 
 }
