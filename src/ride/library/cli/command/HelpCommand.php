@@ -66,17 +66,18 @@ class HelpCommand extends AbstractCommand implements AutoCompletable {
 
         $this->output->writeLine('Syntax: ' . $command->getSyntax());
 
-        $aliases = $command->getAliases();
-        if ($aliases) {
-            $this->output->writeLine('Aliases: ' . implode(',', $aliases));
-        }
-
         foreach ($flags as $flag => $description) {
             $this->output->writeLine('- [--' . $flag . '] ' . $description);
         }
 
         foreach ($arguments as $argument) {
             $this->output->writeLine('- ' . $argument);
+        }
+
+        $aliases = $command->getAliases();
+        if ($aliases) {
+            $this->output->writeLine('');
+            $this->output->writeLine('Alias: ' . implode(',', $aliases));
         }
 
         $this->output->writeLine('');
