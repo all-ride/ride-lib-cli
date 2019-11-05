@@ -34,12 +34,12 @@ class ArrayInput implements Input {
      * @return string Input value
      */
     public function read(Output $output, $prompt) {
-        $input = each($this->commands);
+        $input = current($this->commands);
         if ($input === false) {
             return null;
         }
 
-        return $input['value'];
+        return $input;
     }
 
 }
