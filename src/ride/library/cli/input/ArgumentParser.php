@@ -77,7 +77,8 @@ class ArgumentParser {
                 if ($char == $open) {
                     if ($i > 1 && $string[$i - 1] == "\\") {
                         // escape open symbol
-                        $argument{strlen($argument) - 1} = $open;
+                        // $argument{strlen($argument) - 1} = $open;
+                        $argument = substr($argument, 0, -1) . $open;
                     } else {
                         // closing
                         $arguments[] = $argument;
@@ -183,12 +184,12 @@ class ArgumentParser {
                 }
             } elseif (substr($argument, 0, 1) == '-' && !is_numeric(substr($argument, 1, 1))) {
                 // flags: -n or -arf
-                if (substr($argument, 2, 1) == '='){
+                if (substr($argument, 2, 1) == '=') {
                     $key = substr($argument, 1, 1);
                     $parsedArguments[$key] = substr($argument, 3);
                 } else {
                     $flags = str_split(substr($argument, 1));
-                    foreach ($flags as $flag){
+                    foreach ($flags as $flag) {
                         if (!isset($parsedArguments[$flag])) {
                             $parsedArguments[$flag] = true;
                         }
