@@ -181,6 +181,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the rewind() method of the {@link Iterator Iterator interface}
      * @return null
      */
+    #[\ReturnTypeWillChange]
     public function rewind() {
         reset($this->commands);
     }
@@ -189,6 +190,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the current() method of the {@link Iterator Iterator interface}
      * @return Message a message
      */
+    #[\ReturnTypeWillChange]
     public function current() {
         return current($this->commands);
     }
@@ -197,6 +199,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the key() method of the {@link Iterator Iterator interface}
      * @return int the pointer of the current message
      */
+    #[\ReturnTypeWillChange]
     public function key() {
         return key($this->commands);
     }
@@ -205,6 +208,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the next() method of the {@link Iterator Iterator interface}
      * @return null
      */
+    #[\ReturnTypeWillChange]
     public function next() {
         return next($this->commands);
     }
@@ -213,6 +217,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the valid() method of the {@link Iterator Iterator interface}
      * @return true if the current pointer is valid, false otherwise
      */
+    #[\ReturnTypeWillChange]
     public function valid() {
         return isset($this->commands[key($this->commands)]);
     }
@@ -221,6 +226,7 @@ class CommandContainer implements AutoCompletable, Countable, Iterator {
      * Implementation of the count() method of the {@link Countable Countable interface}
      * @return int number of messages in this container
      */
+    #[\ReturnTypeWillChange]
     public function count() {
         return count($this->commands);
     }
