@@ -9,6 +9,7 @@ use ride\library\cli\output\Output;
  * Implementation of input to take 1 command direct from the command line
  */
 class ArgumentInput implements Input {
+    protected $input;
 
     /**
      * Checks if this input is interactive
