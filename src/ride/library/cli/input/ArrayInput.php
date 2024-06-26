@@ -8,6 +8,7 @@ use ride\library\cli\output\Output;
  * Implementation of input based on an array of commands
  */
 class ArrayInput implements Input {
+    protected $commands;
 
     /**
      * Constructs a new input

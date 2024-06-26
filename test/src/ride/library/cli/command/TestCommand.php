@@ -4,6 +4,8 @@ namespace ride\library\cli\command;
 
 class TestCommand extends AbstractCommand {
 
+    private $isInvoked;
+
     public function __construct() {
         parent::__construct('name', 'description');
 
